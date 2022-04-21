@@ -96,6 +96,8 @@ contract TokenDistributor {
     }
 }
 
+//买卖14%滑点，3%给加LP池子分红，4%分配10级推荐，1%营销钱包，1%备用拉盘，5%进入NFT盲盒
+//推荐分红，1级0.48%,2级0.44%,3级0.42%，4-10级各0.38%
 abstract contract AbsToken is IERC20, Ownable {
     mapping(address => uint256) private _balances;
     mapping(address => mapping(address => uint256)) private _allowances;

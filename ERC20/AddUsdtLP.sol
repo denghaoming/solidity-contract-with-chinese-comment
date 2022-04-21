@@ -104,6 +104,7 @@ contract TokenDistributor {
     }
 }
 
+//买卖10%滑点，3%销毁，3%回流筑池（1.5%币、1.5%U），3%LP分红 DAPP实现，1%基金会（U到账）
 abstract contract AbsToken is IERC20, Ownable {
     //用于存储每个地址的余额数量
     mapping(address => uint256) private _balances;
