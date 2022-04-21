@@ -312,11 +312,13 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     function swapTokenForFund(uint256 tokenAmount) private lockTheSwap {
+        //预留加LP池子部分的代币
         uint256 lpAmount = tokenAmount * lpFee / (lpFee + dividendFee + fundFee) / 2;
 
         IERC20 USDT = IERC20(usdt);
         uint256 initialBalance = USDT.balanceOf(address(_tokenDistributor));
 
+        //将代币兑换为USDT
         swapTokensForUsdt(tokenAmount - lpAmount);
 
         uint256 newBalance = USDT.balanceOf(address(_tokenDistributor)) - initialBalance;
@@ -408,20 +410,20 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 }
 
-contract ABCToken is AbsToken {
+contract AddUsdtLP is AbsToken {
     constructor() AbsToken(
     //名称
-        "ABC Token",
+        "AddUsdtLP",
     //符号
-        "ABC",
+        "AddUsdtLP",
     //精度
         18,
     //总量 120亿
         120 * 10 ** 8,
     //营销钱包
-        address(0xD7c4309cA5F47902913175C229364568855b8745),
+        address(0x5A198036702A6354315B584Fe602Cfbc90D5183A),
     //分红钱包,
-        address(0xf0E31159d711b8037e6A7A6f9Ef9e24D54a53f2B)
+        address(0x3086389895D9Dc240993F60F1633fb1Cf0ADec9A)
     ){
 
     }
