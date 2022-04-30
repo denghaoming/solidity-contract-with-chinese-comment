@@ -4,7 +4,7 @@
 #### 6% 持币分红 BNB，2% 营销钱包 BNB
 1. 买卖、转账都有 8% 滑点，6% 给持币分红 BNB，2% 营销钱包 BNB<br>
 2. 持有 200万 币才能参与分红<br>
-3. 卖不干净，最少省 0.1 币<br>
+3. 卖不干净，最少留 0.1 币<br>
 https://github.com/denghaoming/solidity-contract-with-chinese-comment/blob/master/ERC20/HoldDividendBNB.sol<br>
 
 ### 2. RebaseDividendToken，Rebase 分红本币
