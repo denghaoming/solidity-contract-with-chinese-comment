@@ -1,4 +1,5 @@
 # 带中文注释的 Solidity 智能合约
+### 区块链 Solidity 智能合约交流QQ群：103682866
 
 ### 5. HoldAutoApy，持币自动复利
 #### USDT 持币自动复利，营销钱包，销毁
@@ -34,5 +35,3 @@ https://github.com/denghaoming/solidity-contract-with-chinese-comment/blob/maste
 #### USDT 回流加池子，营销钱包，销毁
 1. 买卖10%滑点，3%销毁，3%回流筑池（1.5%币、1.5%U），3%LP分红 DAPP实现，1%基金会（U到账）<br>
 https://github.com/denghaoming/solidity-contract-with-chinese-comment/blob/master/ERC20/AddUsdtLP.sol<br>
-
-### 区块链 Solidity 智能合约交流QQ群：103682866
