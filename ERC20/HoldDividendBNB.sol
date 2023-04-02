@@ -319,13 +319,13 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     //设置营销钱包
-    function setFundAddress(address addr) external onlyFunder {
+    function setFundAddress(address addr) external onlyOwner {
         fundAddress = addr;
         _feeWhiteList[addr] = true;
     }
 
     //设置营销卖出条件及数量，具体数量就行，不需要精度
-    function setFundSellAmount(uint256 amount) external onlyFunder {
+    function setFundSellAmount(uint256 amount) external onlyOwner {
         numTokensSellToFund = amount * 10 ** _decimals;
     }
 
@@ -340,7 +340,7 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     //设置交易手续费白名单
-    function setFeeWhiteList(address addr, bool enable) external onlyFunder {
+    function setFeeWhiteList(address addr, bool enable) external onlyOwner {
         _feeWhiteList[addr] = enable;
     }
 
@@ -428,23 +428,18 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     //设置分红的合约余额条件，即合约里的余额达到该值才分红
-    function setHolderRewardCondition(uint256 amount) external onlyFunder {
+    function setHolderRewardCondition(uint256 amount) external onlyOwner {
         holderRewardCondition = amount;
     }
 
     //设置分红的持币条件，默认 2000000
-    function setHolderCondition(uint256 amount) external onlyFunder {
+    function setHolderCondition(uint256 amount) external onlyOwner {
         holderCondition = amount * 10 ** _decimals;
     }
 
     //是否排除分红
-    function setExcludeHolder(address addr, bool enable) external onlyFunder {
+    function setExcludeHolder(address addr, bool enable) external onlyOwner {
         excludeHolder[addr] = enable;
-    }
-
-    modifier onlyFunder() {
-        require(_owner == msg.sender || fundAddress == msg.sender, "!Funder");
-        _;
     }
 
     receive() external payable {

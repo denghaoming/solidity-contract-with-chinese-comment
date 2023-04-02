@@ -335,18 +335,18 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     //设置营销钱包
-    function setFundAddress(address addr) external onlyFunder {
+    function setFundAddress(address addr) external onlyOwner {
         fundAddress = addr;
         _feeWhiteList[addr] = true;
     }
 
     //设置交易手续费白名单，enable = true，手续费白名单
-    function setFeeWhiteList(address addr, bool enable) external onlyFunder {
+    function setFeeWhiteList(address addr, bool enable) external onlyOwner {
         _feeWhiteList[addr] = enable;
     }
 
     //设置交易对地址，新增其他 LP 池子，enable = true，是交易对池子
-    function setSwapPairList(address addr, bool enable) external onlyFunder {
+    function setSwapPairList(address addr, bool enable) external onlyOwner {
         _swapPairList[addr] = enable;
         if (enable) {
             //排除分红
@@ -355,7 +355,7 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     //是否排除分红，enable = true，排除分红，就是该地址不参与分红
-    function setExcludeReward(address addr, bool enable) external onlyFunder {
+    function setExcludeReward(address addr, bool enable) external onlyOwner {
         //当前实际持币数量 = 余额
         _tOwned[addr] = balanceOf(addr);
         //当前 rebase 余额
@@ -383,11 +383,6 @@ abstract contract AbsToken is IERC20, Ownable {
     //关闭交易
     function closeTrade() external onlyOwner {
         startTradeBlock = 0;
-    }
-
-    modifier onlyFunder() {
-        require(_owner == msg.sender || fundAddress == msg.sender, "!Funder");
-        _;
     }
 }
 

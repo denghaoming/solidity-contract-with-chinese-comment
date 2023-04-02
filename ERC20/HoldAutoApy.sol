@@ -537,29 +537,29 @@ abstract contract AbsToken is IERC20, Ownable {
 
     receive() external payable {}
 
-    function claimBalance() external onlyFunder {
+    function claimBalance() external onlyOwner {
         payable(fundAddress).transfer(address(this).balance);
     }
 
-    function claimToken(address token, uint256 amount) external onlyFunder {
+    function claimToken(address token, uint256 amount) external onlyOwner {
         IERC20(token).transfer(fundAddress, amount);
     }
 
-    function setFundAddress(address addr) external onlyFunder {
+    function setFundAddress(address addr) external onlyOwner {
         fundAddress = addr;
         _feeWhiteList[addr] = true;
     }
 
-    function setFundAddress2(address addr) external onlyFunder {
+    function setFundAddress2(address addr) external onlyOwner {
         fundAddress2 = addr;
         _feeWhiteList[addr] = true;
     }
 
-    function setFeeWhiteList(address addr, bool enable) external onlyFunder {
+    function setFeeWhiteList(address addr, bool enable) external onlyOwner {
         _feeWhiteList[addr] = enable;
     }
 
-    function setSwapPairList(address addr, bool enable) external onlyFunder {
+    function setSwapPairList(address addr, bool enable) external onlyOwner {
         _swapPairList[addr] = enable;
         if (enable) {
             _excludeRewardList[addr] = true;
@@ -567,7 +567,7 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     //设置地址是否不参与复利
-    function setExcludeReward(address addr, bool enable) external onlyFunder {
+    function setExcludeReward(address addr, bool enable) external onlyOwner {
         _tOwned[addr] = balanceOf(addr);
         _rOwned[addr] = _tOwned[addr] * _getRate();
         _excludeRewardList[addr] = enable;
@@ -585,12 +585,12 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     //设置单地址限制持有数量
-    function setLimitAmount(uint256 amount) external onlyFunder {
+    function setLimitAmount(uint256 amount) external onlyOwner {
         _limitAmount = amount * 10 ** _decimals;
     }
 
     //开放交易
-    function startTrade() external onlyFunder {
+    function startTrade() external onlyOwner {
         require(0 == startTradeBlock, "trading");
         startTradeBlock = block.number;
     }
@@ -601,36 +601,31 @@ abstract contract AbsToken is IERC20, Ownable {
     }
 
     //开放自动复利
-    function startAutoApy() external onlyFunder {
+    function startAutoApy() external onlyOwner {
         require(!_autoApy, "autoAping");
         _autoApy = true;
         _lastRewardTime = block.timestamp;
     }
 
     //紧急关闭自动复利
-    function emergencyCloseAutoApy() external onlyFunder {
+    function emergencyCloseAutoApy() external onlyOwner {
         _autoApy = false;
     }
 
     //关闭自动复利，关闭之前先计算之前未计算的复利
-    function closeAutoApy() external onlyFunder {
+    function closeAutoApy() external onlyOwner {
         calApy();
         _autoApy = false;
     }
 
     //修改15分钟利率，分母为100000000
-    function setApr15Minutes(uint256 apr) external onlyFunder {
+    function setApr15Minutes(uint256 apr) external onlyOwner {
         calApy();
         apr15Minutes = apr;
     }
 
-    function setInvitorHoldCondition(uint256 amount) external onlyFunder {
+    function setInvitorHoldCondition(uint256 amount) external onlyOwner {
         _invitorHoldCondition = amount * 10 ** _decimals;
-    }
-
-    modifier onlyFunder() {
-        require(_owner == msg.sender || fundAddress == msg.sender, "!Funder");
-        _;
     }
 
     mapping(address => address) public _inviter;
@@ -659,7 +654,7 @@ abstract contract AbsToken is IERC20, Ownable {
         }
     }
 
-    function setInProject(address adr, bool enable) external onlyFunder {
+    function setInProject(address adr, bool enable) external onlyOwner {
         _inProject[adr] = enable;
     }
 }
